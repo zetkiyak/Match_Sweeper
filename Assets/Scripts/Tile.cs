@@ -5,9 +5,6 @@ using UnityEngine.UI;
 public class Tile : MonoBehaviour
 {
     public Image item;
-    public string id;  
+    public string id;
     public Vector2Int Mypos;
-
-
-    
 }
