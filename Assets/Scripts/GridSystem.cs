@@ -7,21 +7,23 @@ public class GridSystem : MonoBehaviour
 {
     [SerializeField] private Tile _tile;
     [SerializeField] private float _offset;
-    [SerializeField] private int _width;
-    [SerializeField] private int _height;
     [SerializeField] private float _scale;
+    public Canvas canvas;
 
-    private void Start()
+    #region Instance
+    public static GridSystem instance;
+    private void Awake()
     {
-        GenerateGridSystem();
+        if (!instance)
+            instance = this;
     }
+    #endregion
 
-    public void GenerateGridSystem()
+    public void GenerateGridSystem(int _width, int _height)
     {
-
         Vector3 tileScale;
         float startX, startY;
-        CalculateGridParameters(out tileScale, out startX, out startY);
+        CalculateGridParameters(out tileScale, out startX, out startY, _width, _height);
 
         for (int i = 0; i < _width; i++)
         {
@@ -32,14 +34,13 @@ public class GridSystem : MonoBehaviour
                 tile.transform.localPosition = pos;
 
                 tile.name = "(" + i + "," + j + ")";
-                tile.Mypos = new Vector2Int(i, j);
-
+                tile.Mypos = new Vector2Int(i, j);                
                 tile.transform.localScale = tileScale;
             }
         }
     }
 
-    private void CalculateGridParameters(out Vector3 tileScale, out float startX, out float startY)
+    private void CalculateGridParameters(out Vector3 tileScale, out float startX, out float startY, int _width, int _height)
     {
         float gridWidth = _width * _offset;
         float gridHeight = _height * _offset;
@@ -54,10 +55,6 @@ public class GridSystem : MonoBehaviour
         startX = -gridWidth / 2 + _offset / 2;
         startY = gridHeight / 2 - _offset / 2;
     }
-
-
-
-
 
 }
 
