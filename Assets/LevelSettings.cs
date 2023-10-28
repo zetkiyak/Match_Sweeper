@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelSettings : MonoBehaviour
 {
-    [SerializeField] private Vector2Int _gridSize;
+    public Vector2Int _gridSize;
     public TileData tileData;
     private void Start()
     {

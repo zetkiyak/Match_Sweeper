@@ -10,5 +10,4 @@ public class Tile : MonoBehaviour
     public Vector2Int Mypos;
     public bool isActive = false;
 
-
 }

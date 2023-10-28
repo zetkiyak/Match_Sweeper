@@ -4,112 +4,60 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TileMovement : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDropHandler
 {
     private RectTransform rectTransform;
     private Vector2 startDragPos;
+    Transform closestTile = null;
 
-    private void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
-    }
+    public bool endDrag;
+    MatchControl matchControl;
+
+    private void Awake() => rectTransform = GetComponent<RectTransform>();
     private void Start()
     {
         startDragPos = this.transform.position;
+        matchControl = GetComponent<MatchControl>();
     }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         //if (GetComponent<Tile>().isActive == true)
-        rectTransform.SetAsLastSibling();
-
-    }
-
-
-    Transform closestTile = null;
-    float minDistance;
-    float distance;
-    private void FindClosestTile()
-    {
-        //if (GetComponent<Tile>().isActive == true)
         //{
-        Vector2 dragPos = rectTransform.position;
-        minDistance = float.MaxValue;
-
-        foreach (Transform tileTransform in GridSystem.instance.transform)
-        {
-            if (tileTransform != transform)
-            {
-                Vector2 tilePos = tileTransform.position;
-                distance = Vector2.Distance(dragPos, tilePos);
-
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    closestTile = tileTransform;
-                }
-            }
-        }
-
-        //  }
-
-
-
+        rectTransform.SetAsLastSibling();
+        endDrag = false;
+        //}
     }
-
-
     public void OnDrag(PointerEventData eventData)
     {
         //if (GetComponent<Tile>().isActive == true)
-        // {
+        //{
         rectTransform.anchoredPosition += eventData.delta / GridSystem.instance.canvas.scaleFactor;
-        FindClosestTile();
+        matchControl.FindClosestTile(rectTransform);
 
         //}
     }
+    public void OnDrop(PointerEventData eventData)=> matchControl.Match(endDrag);
 
-    #region End Drag
-    public bool endDrag;
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        endDrag = true;
-    }
-    private void Update()
+    private void FixedUpdate()
     {
         //if (GetComponent<Tile>().isActive == true)
         MoveStartPos();
-    }
 
+
+        if (Input.touchCount == 0)
+            endDrag = true;
+
+
+    }
     private void MoveStartPos()
     {
         if (endDrag)
         {
-            transform.position = Vector3.MoveTowards(transform.position, startDragPos, 3);
+            transform.position = Vector3.MoveTowards(transform.position, startDragPos, 50);
             Vector2 pos = new Vector2(transform.position.x, transform.position.y);
-
             if (pos == startDragPos)
                 endDrag = false;
-        }
-    }
-    #endregion
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        Debug.Log("down");
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        Debug.Log(distance);//distance da sýkýntý var
-        if (closestTile != null && distance < 300) /*&& GetComponent<Tile>().isActive == true*/
-        {
-            if (closestTile.GetComponent<Tile>().id == this.GetComponent<Tile>().id)
-            {
-                // Burada en yakýn tile ile yapmak istediðiniz iþlemleri gerçekleþtirebilirsiniz.
-                Debug.Log(closestTile.name);
-                closestTile.gameObject.SetActive(false);
-                this.gameObject.SetActive(false);
-
-            }
         }
     }
 

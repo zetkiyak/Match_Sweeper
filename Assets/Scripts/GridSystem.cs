@@ -9,7 +9,7 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private float _offset;
     [SerializeField] private float _scale;
     public Canvas canvas;
-
+    public List<Tile> tiles = new List<Tile>();
     #region Instance
     public static GridSystem instance;
     private void Awake()
@@ -34,8 +34,10 @@ public class GridSystem : MonoBehaviour
                 tile.transform.localPosition = pos;
 
                 tile.name = "(" + i + "," + j + ")";
-                tile.Mypos = new Vector2Int(i, j);                
+                tile.Mypos = new Vector2Int(i, j);
                 tile.transform.localScale = tileScale;
+                tiles.Add(tile);
+
             }
         }
     }
@@ -55,6 +57,17 @@ public class GridSystem : MonoBehaviour
         startX = -gridWidth / 2 + _offset / 2;
         startY = gridHeight / 2 - _offset / 2;
     }
+    public GameObject GetTileMyPos(int x, int y)
+    {
+        foreach (Tile tile in tiles)
+        {
+            if (tile.Mypos.x == x && tile.Mypos.y == y)
+            {
+                return tile.gameObject;
+            }
+        }
 
+        return null;
+    }
+    
 }
-
