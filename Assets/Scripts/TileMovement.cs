@@ -8,7 +8,6 @@ public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDro
 {
     private RectTransform rectTransform;
     private Vector2 startDragPos;
-    Transform closestTile = null;
 
     public bool endDrag;
     MatchControl matchControl;
@@ -22,27 +21,27 @@ public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDro
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //if (GetComponent<Tile>().isActive == true)
-        //{
-        rectTransform.SetAsLastSibling();
-        endDrag = false;
-        //}
+        if (GetComponent<Tile>().isActive == true)
+        {
+            rectTransform.SetAsLastSibling();
+            endDrag = false;
+        }
     }
     public void OnDrag(PointerEventData eventData)
     {
-        //if (GetComponent<Tile>().isActive == true)
-        //{
-        rectTransform.anchoredPosition += eventData.delta / GridSystem.instance.canvas.scaleFactor;
-        matchControl.FindClosestTile(rectTransform);
+        if (GetComponent<Tile>().isActive == true)
+        {
+            rectTransform.anchoredPosition += eventData.delta / GridSystem.instance.canvas.scaleFactor;
+            matchControl.FindClosestTile(rectTransform);
 
-        //}
+        }
     }
-    public void OnDrop(PointerEventData eventData)=> matchControl.Match(endDrag);
+    public void OnDrop(PointerEventData eventData) => matchControl.Match(endDrag);
 
     private void FixedUpdate()
     {
-        //if (GetComponent<Tile>().isActive == true)
-        MoveStartPos();
+        if (GetComponent<Tile>().isActive == true)
+            MoveStartPos();
 
 
         if (Input.touchCount == 0)
