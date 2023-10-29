@@ -11,6 +11,9 @@ public class ItemGenerator : MonoBehaviour
     public int gridSizeX, gridSizeY;
     public TileData tileData;
     public static ItemGenerator Instance;
+
+    int tilesToOpenCount;
+    int randomTile;
     private void Awake()
     {
         Instance = this;
@@ -24,6 +27,8 @@ public class ItemGenerator : MonoBehaviour
         gridSizeX = LevelManager.instance.currentLevelSettings._gridSize.x;
         gridSizeY = LevelManager.instance.currentLevelSettings._gridSize.y;
         tileData = LevelManager.instance.currentLevelSettings.tileData;
+        tilesToOpenCount = LevelManager.instance.currentLevelSettings.tilesToOpen.Count;
+        randomTile = starttile();
         Generate();
 
     }
@@ -43,35 +48,54 @@ public class ItemGenerator : MonoBehaviour
 
         }
     }
+    int pairMatchControl = 0;
+    int index; int itemLenght;
+
+    public int starttile()
+    {
+        int rand = UnityEngine.Random.Range(0, tilesToOpenCount);//3
+        Debug.Log(tilesToOpenCount);
+        return rand;
+    }
     public string getRandomItem()
     {
         if (allItem.Count > 0)
         {
-            int index = UnityEngine.Random.Range(0, allItem.Count);//3-2-1-0
-            int itemCount = allItem[index].count;//3. ga-10
-            allItem[index].count--;
-            
-            if (control(index, itemCount))
-                return allItem[index].id;//bird
-            else return getRandomItem();
+            Debug.Log(randomTile);
+            if (pairMatchControl != randomTile)
+            {
+                index = UnityEngine.Random.Range(0, allItem.Count);
+                itemLenght = allItem[index].count;
+                allItem[index].count--;
+                pairMatchControl++;
+
+                if (CheckAllItem(index, itemLenght))
+                    return allItem[index].id;
+                else return getRandomItem();
+
+            }
+            else
+            {
+                itemLenght = allItem[index].count;
+                allItem[index].count--;
+                pairMatchControl++;
+
+                if (CheckAllItem(index, itemLenght))
+                    return allItem[index].id;
+                else return getRandomItem();
+            }
+
+
+
         }
         return null;
-        
-    }
-    public bool control(int index, int itemCount)
-    {
-        if (itemCount > 0)
-        {
-            return true;
-        }
-        else if (itemCount == 0)
-        {
-            
-            allItem.RemoveAt(index);
-            return false;
-        }
-        return false;
 
+    }
+    public bool CheckAllItem(int index, int itemCount)
+    {
+        if (itemCount > 0) return true;
+        else if (itemCount == 0) allItem.RemoveAt(index);
+        return false;
     }
     public Sprite SearchSprite(string index)
     {

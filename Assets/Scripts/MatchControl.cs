@@ -13,11 +13,13 @@ public class MatchControl : MonoBehaviour
     LevelManager levelManager;
     Tile tile;
     GridSystem gridSystem;
+
     private void Start()
     {
         levelManager = LevelManager.instance;
         tile = GetComponent<Tile>();
         gridSystem = GridSystem.instance;
+
     }
     public void FindClosestTile(RectTransform rectTransform)
     {
@@ -26,7 +28,7 @@ public class MatchControl : MonoBehaviour
             Vector2 dragPos = rectTransform.position;
             minDistance = float.MaxValue;
 
-            foreach (Transform tileTransform in GridSystem.instance.transform)                         //list ile degissstirr
+            foreach (Transform tileTransform in GridSystem.instance.transform)
             {
                 if (tileTransform != transform)
                 {
@@ -44,7 +46,7 @@ public class MatchControl : MonoBehaviour
 
         }
     }
-    public void Match(bool endDrag)//pair match
+    public void CheckMatch(bool endDrag)
     {
         //  CORRECT MATCH
         if (closestTile != null && minDistance < 50 && tile.isActive == true)
@@ -61,7 +63,7 @@ public class MatchControl : MonoBehaviour
                 for (int i = 0; i < neighbors.Count; i++)
                 {
                     gridSystem.tiles.Remove(neighbors[i].gameObject.GetComponent<Tile>());
-                    neighbors[i].GetComponent<Tile>().open();
+                    neighbors[i].GetComponent<Tile>().ActivateTile();
                 }
             }
         }
@@ -80,7 +82,7 @@ public class MatchControl : MonoBehaviour
             for (int yOffset = -1; yOffset <= 1; yOffset++)
             {
                 if (xOffset == 0 && yOffset == 0)
-                    continue; // Kendi koordinatýný dahil etme
+                    continue;
 
                 int neighborX = position.x + xOffset;
                 int neighborY = position.y + yOffset;
@@ -88,7 +90,7 @@ public class MatchControl : MonoBehaviour
 
                 if (IsValidTilePosition(neighborX, neighborY))
                 {
-                    GameObject neighborPos = gridSystem.GetTileMyPos(neighborX, neighborY);
+                    GameObject neighborPos = gridSystem.GetTileByPos(neighborX, neighborY);
                     Debug.Log(neighborPos);
                     if (neighborPos != null && neighborPos.GetComponent<Tile>().isActive == false)
                     {
@@ -102,8 +104,7 @@ public class MatchControl : MonoBehaviour
         return neighbors;
     }
 
-    //Verilen koordinatlar geçerli bir tile pozisyonu mu kontrol eder
-    private bool IsValidTilePosition(int x, int y)//grid sistemi gönderilecek
+    private bool IsValidTilePosition(int x, int y)
     {
         return x >= 0 && x < levelManager.currentLevelSettings._gridSize.x && y >= 0 && y < levelManager.currentLevelSettings._gridSize.y;
     }

@@ -36,7 +36,7 @@ public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDro
 
         }
     }
-    public void OnDrop(PointerEventData eventData) => matchControl.Match(endDrag);
+    public void OnDrop(PointerEventData eventData) => matchControl.CheckMatch(endDrag);
 
     private void FixedUpdate()
     {

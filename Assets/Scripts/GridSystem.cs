@@ -57,7 +57,7 @@ public class GridSystem : MonoBehaviour
         startX = -gridWidth / 2 + _offset / 2;
         startY = gridHeight / 2 - _offset / 2;
     }
-    public GameObject GetTileMyPos(int x, int y)
+    public GameObject GetTileByPos(int x, int y)
     {
         foreach (Tile tile in tiles)
         {

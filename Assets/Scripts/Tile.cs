@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
+
 public class Tile : MonoBehaviour
 {
     public Sprite item;
@@ -10,25 +12,19 @@ public class Tile : MonoBehaviour
     public Vector2Int Mypos;
     public bool isActive = false;
 
-    public void SetItem(string itemID, Sprite itemSprite)
-    {
-        id = itemID;
-        item = itemSprite;
-    }
-    public void open()
+    public void ActivateTile()
     {
         isActive = true;
-        GetRandomIDAndSprite();
+        SetItem();
+        SetSprite(item);
     }
 
-    private void GetRandomIDAndSprite()
+    private void SetItem()
     {
-        string id = ItemGenerator.Instance.getRandomItem();
-        Sprite sprite = ItemGenerator.Instance.SearchSprite(id);
-        SetItem(id, sprite);
-        OpenSprite(sprite);
+        id = ItemGenerator.Instance.getRandomItem();
+        item = ItemGenerator.Instance.SearchSprite(id);
     }
-    private void OpenSprite(Sprite sprite)
+    private void SetSprite(Sprite sprite)
     {
         this.GetComponent<Image>().sprite = LevelManager.instance.currentLevelSettings.openTileBackground;
         this.transform.GetChild(0).GetComponent<Image>().enabled = true;

@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a3f6a030df6b6f4c8f2c523528b7175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allItemID: []
+  allItem: []
   itemCount: 0
   gridSizeX: 0
   gridSizeY: 0
@@ -548,6 +548,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &721166695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 721166697}
+  - component: {fileID: 721166696}
+  m_Layer: 0
+  m_Name: MatchManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &721166696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721166695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 851092e5925399847b73d061f1724315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &721166697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721166695}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 329.96494, y: 868.035, z: -2.106933}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1042937145
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,6 +623,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gridSize: {x: 6, y: 10}
   tileData: {fileID: 11400000, guid: c00b25007e9987e43a8cf579d4b84965, type: 2}
+  gridSystem: {fileID: 1101134781}
+  levelManager: {fileID: 515185951}
+  closedTileBackground: {fileID: 21300000, guid: dbf0f13151cd8ec419900e023d83fe92, type: 3}
+  openTileBackground: {fileID: 21300000, guid: 0e814a240f4828e48a7ce4c509befc8d, type: 3}
+  tilesToOpen:
+  - {x: 0, y: 0}
+  - {x: 3, y: 2}
+  - {x: 3, y: 5}
+  - {x: 0, y: 2}
+  - {x: 5, y: 0}
 --- !u!4 &1042937147
 Transform:
   m_ObjectHideFlags: 0
