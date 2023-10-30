@@ -56,13 +56,14 @@ public class MatchControl : MonoBehaviour
                 gridSystem.tiles.Remove(closestTile.gameObject.GetComponent<Tile>());
                 gridSystem.tiles.Remove(tile);
 
+                //closestTile.GetComponent<Tile>().Mypos.x = 0;
                 Destroy(closestTile.gameObject);
                 Destroy(this.gameObject);
 
                 var neighbors = GetNeighbors(closestTile.GetComponent<Tile>().Mypos);
                 for (int i = 0; i < neighbors.Count; i++)
                 {
-                    gridSystem.tiles.Remove(neighbors[i].gameObject.GetComponent<Tile>());
+                    //gridSystem.tiles.Remove(neighbors[i].gameObject.GetComponent<Tile>());
                     neighbors[i].GetComponent<Tile>().ActivateTile();
                 }
             }
@@ -70,6 +71,9 @@ public class MatchControl : MonoBehaviour
         // WRONG MATCH
         if (minDistance > 50)
             endDrag = true;
+
+
+        gridSystem.ResortOpr();
 
     }
 

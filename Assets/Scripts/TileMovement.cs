@@ -1,14 +1,16 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using static UnityEditor.PlayerSettings;
+using DG.Tweening;
 public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDropHandler
 {
     private RectTransform rectTransform;
     private Vector2 startDragPos;
-
+    bool resortActive;
     public bool endDrag;
     MatchControl matchControl;
 
@@ -21,7 +23,7 @@ public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDro
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (GetComponent<Tile>().isActive == true)
+        if (GetComponent<Tile>().isActive == true && !resortActive)
         {
             rectTransform.SetAsLastSibling();
             endDrag = false;
@@ -29,7 +31,7 @@ public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDro
     }
     public void OnDrag(PointerEventData eventData)
     {
-        if (GetComponent<Tile>().isActive == true)
+        if (GetComponent<Tile>().isActive == true && !resortActive)
         {
             rectTransform.anchoredPosition += eventData.delta / GridSystem.instance.canvas.scaleFactor;
             matchControl.FindClosestTile(rectTransform);
@@ -40,14 +42,12 @@ public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDro
 
     private void FixedUpdate()
     {
-        if (GetComponent<Tile>().isActive == true)
+        if (GetComponent<Tile>().isActive == true && !resortActive)
             MoveStartPos();
 
 
-        if (Input.touchCount == 0)
+        if (Input.touchCount == 0 && !resortActive)
             endDrag = true;
-
-
     }
     private void MoveStartPos()
     {
@@ -59,5 +59,20 @@ public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDro
                 endDrag = false;
         }
     }
+    [Button]
+    public void ResortMovement()//2.-4.10
+    {
+        if (GetComponent<Tile>().Mypos != GetComponent<Tile>().MyStartPos)
+        {
+            resortActive = true;
+            Tile tile = this.GetComponent<Tile>();
+            int diff = tile.MyStartPos.y - tile.Mypos.y;
+            this.transform.DOLocalMoveY((this.transform.localPosition.y + (GridSystem.instance.offset * diff)), 0.25f).SetEase(Ease.OutBounce).OnComplete(() =>
+            {
+                startDragPos = this.transform.position;
+                resortActive = false;
+            });
+        }
 
+    }
 }

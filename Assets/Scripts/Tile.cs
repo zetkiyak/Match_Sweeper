@@ -10,7 +10,9 @@ public class Tile : MonoBehaviour
     public Sprite item;
     public string id;
     public Vector2Int Mypos;
+    public Vector2Int MyStartPos;
     public bool isActive = false;
+
 
     public void ActivateTile()
     {
