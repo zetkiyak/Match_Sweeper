@@ -16,18 +16,4 @@ public class LevelSettings : MonoBehaviour
         gridSystem.GenerateGridSystem(_gridSize.x, _gridSize.y);
         levelManager.currentLevelSettings = this;
     }
-    IEnumerator Start()
-    {
-        yield return null;
-        yield return null;
-        GetObject();
-    }
-    public void GetObject()
-    {
-        for (int i = 0; i < tilesToOpen.Count; i++)
-        {
-            GameObject obj = gridSystem.GetTileByPos(tilesToOpen[i].x, tilesToOpen[i].y);
-            obj.GetComponent<Tile>().ActivateTile();
-        }
-    }
 }

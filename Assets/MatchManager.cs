@@ -1,27 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class MatchManager : MonoBehaviour
 {
-
     LevelSettings levelSettings;
     GridSystem gridSystem;
-
-    void Start()
+    IEnumerator Start()
     {
+        yield return null;
+        yield return null;
 
         levelSettings = LevelManager.instance.currentLevelSettings;
         gridSystem = GridSystem.instance;
-        //GetObject();
+
+        GetStartItem();
     }
 
-    //public void GetObject()
-    //{
-    //    for (int i = 0; i < levelSettings.tiles.Count; i++)
-    //    {
-    //        GameObject obj = gridSystem.GetTileByPos(levelSettings.tiles[i].x, levelSettings.tiles[i].y);
-    //        obj.GetComponent<Tile>().ActivateTile();
-    //    }
-    //}
+    public void GetStartItem()
+    {
+        for (int i = 0; i < levelSettings.tilesToOpen.Count; i++)
+        {
+            GameObject obj = gridSystem.GetTileByPos(levelSettings.tilesToOpen[i].x, levelSettings.tilesToOpen[i].y);
+            obj.GetComponent<Tile>().ActivateTile();
+        }
+    }
 }

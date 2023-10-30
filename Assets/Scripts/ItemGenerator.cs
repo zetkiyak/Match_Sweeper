@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Mathematics;
 using UnityEngine;
 public class ItemGenerator : MonoBehaviour
@@ -10,15 +11,18 @@ public class ItemGenerator : MonoBehaviour
     public int itemCount;
     public int gridSizeX, gridSizeY;
     public TileData tileData;
-    public static ItemGenerator Instance;
 
     int tilesToOpenCount;
     int randomTile;
+    int pairMatchControl = 0;
+    int itemLenght;
+    #region singleton
+    public static ItemGenerator Instance;
     private void Awake()
     {
         Instance = this;
-
     }
+    #endregion
     private IEnumerator Start()//Start Fonksiyonu 2 frame geciktirildi. Bu sayede diðer startlar ile cakismasi onlendi.
     {
         yield return null;
@@ -28,7 +32,9 @@ public class ItemGenerator : MonoBehaviour
         gridSizeY = LevelManager.instance.currentLevelSettings._gridSize.y;
         tileData = LevelManager.instance.currentLevelSettings.tileData;
         tilesToOpenCount = LevelManager.instance.currentLevelSettings.tilesToOpen.Count;
-        randomTile = starttile();
+
+
+        randomTile = ChooseRandomStartItem();
         Generate();
 
     }
@@ -45,56 +51,48 @@ public class ItemGenerator : MonoBehaviour
         {
             AddTileItem(result, 4, 0);
             AddTileItem(result + 1, 2, result);
-
         }
     }
-    int pairMatchControl = 0;
-    int index; int itemLenght;
 
-    public int starttile()
+    public int ChooseRandomStartItem()
     {
-        int rand = UnityEngine.Random.Range(0, tilesToOpenCount);//3
-        Debug.Log(tilesToOpenCount);
+        int rand = UnityEngine.Random.Range(1, tilesToOpenCount - 1);//3
         return rand;
     }
-    public string getRandomItem()
+    public string GiveItemsToMatch()//pair match ihtimali controlu  
     {
         if (allItem.Count > 0)
         {
-            Debug.Log(randomTile);
             if (pairMatchControl != randomTile)
-            {
-                index = UnityEngine.Random.Range(0, allItem.Count);
-                itemLenght = allItem[index].count;
-                allItem[index].count--;
-                pairMatchControl++;
-
-                if (CheckAllItem(index, itemLenght))
-                    return allItem[index].id;
-                else return getRandomItem();
-
-            }
+                return GetRandomItem(true);
             else
-            {
-                itemLenght = allItem[index].count;
-                allItem[index].count--;
-                pairMatchControl++;
-
-                if (CheckAllItem(index, itemLenght))
-                    return allItem[index].id;
-                else return getRandomItem();
-            }
-
-
-
+                return GetRandomItem(false);
         }
         return null;
-
     }
+    int index;
+    private string GetRandomItem(bool control)
+    {
+        if (control)
+            index = UnityEngine.Random.Range(0, allItem.Count);
+
+        itemLenght = allItem[index].count;
+        allItem[index].count--;
+        pairMatchControl++;
+
+        if (CheckAllItem(index, itemLenght))
+            return allItem[index].id;
+        else
+            return GiveItemsToMatch();
+    }
+
     public bool CheckAllItem(int index, int itemCount)
     {
-        if (itemCount > 0) return true;
-        else if (itemCount == 0) allItem.RemoveAt(index);
+        if (itemCount > 0)
+            return true;
+        else if (itemCount == 0)
+            allItem.RemoveAt(index);
+
         return false;
     }
     public Sprite SearchSprite(string index)

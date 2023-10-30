@@ -21,7 +21,7 @@ public class Tile : MonoBehaviour
 
     private void SetItem()
     {
-        id = ItemGenerator.Instance.getRandomItem();
+        id = ItemGenerator.Instance.GiveItemsToMatch();
         item = ItemGenerator.Instance.SearchSprite(id);
     }
     private void SetSprite(Sprite sprite)

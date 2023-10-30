@@ -91,7 +91,6 @@ public class MatchControl : MonoBehaviour
                 if (IsValidTilePosition(neighborX, neighborY))
                 {
                     GameObject neighborPos = gridSystem.GetTileByPos(neighborX, neighborY);
-                    Debug.Log(neighborPos);
                     if (neighborPos != null && neighborPos.GetComponent<Tile>().isActive == false)
                     {
                         neighbors.Add(neighborPos);
