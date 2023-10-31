@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd1414475095ba43a1814e38ad6110c, type: 3}
+  m_Name: Emoji Tile Data
+  m_EditorClassIdentifier: 
+  items:
+  - id: Angry
+    sprite: {fileID: 21300000, guid: b503a0e20b3612c40bd704a8e7d980b1, type: 3}
+  - id: Confused
+    sprite: {fileID: 21300000, guid: 005fdda583b2c954fae41e2a46c94835, type: 3}
+  - id: Cool
+    sprite: {fileID: 21300000, guid: 84ab453e02dd4d9438ee8e48121524ff, type: 3}
+  - id: Emoji
+    sprite: {fileID: 21300000, guid: 507b0552ee7302840a1d83d1b6991602, type: 3}
+  - id: Emoji1
+    sprite: {fileID: 21300000, guid: 42e513113f7f41f419cd5a50016d0067, type: 3}
+  - id: Emoji2
+    sprite: {fileID: 21300000, guid: a458377bb91b09744b5ee40f7a115291, type: 3}
+  - id: Emoji3
+    sprite: {fileID: 21300000, guid: 4d706373a73f0984db4d26412d36c6e4, type: 3}
+  - id: Emoji4
+    sprite: {fileID: 21300000, guid: 26a5b2e1e3a2ebf4bbcaf141c3ec6800, type: 3}
+  - id: Emoji5
+    sprite: {fileID: 21300000, guid: ec425698d8576a84ca6aa05e34224663, type: 3}
+  - id: Happy
+    sprite: {fileID: 21300000, guid: c609760267c886a4b9428a58f6805515, type: 3}
+  - id: HappyFace
+    sprite: {fileID: 21300000, guid: eba6feb179188a249963260503cf15b7, type: 3}
+  - id: Proud
+    sprite: {fileID: 21300000, guid: 5b9be64bbf9908b469866b8276e6c9b5, type: 3}
+  - id: Scared
+    sprite: {fileID: 21300000, guid: a6df87c33ab929d46a4874e35f9f3e56, type: 3}
+  - id: Silly
+    sprite: {fileID: 21300000, guid: ae00084692c62184c89aabd353b2ee33, type: 3}
+  - id: Superstar
+    sprite: {fileID: 21300000, guid: 3b6609f22b6d8f94499658827d6e6d0a, type: 3}

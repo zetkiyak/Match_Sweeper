@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
     public Transform LevelParent;
-    public TextMeshProUGUI LevelCountText;
-    int nextLevelCount;
+    //public TextMeshProUGUI LevelCountText;
+    public int currentLevelCount;
     public LevelSettings currentLevelSettings;
+
     private void Awake()
     {
         if (!instance)
@@ -23,6 +26,8 @@ public class LevelManager : MonoBehaviour
         {
             LevelParent.GetChild(i).gameObject.SetActive(false);
         }
+
+        OpenLevel();
     }
     public void LevelTextControl()
     {
@@ -30,19 +35,32 @@ public class LevelManager : MonoBehaviour
         //LevelCountText.text = "LEVEL " + levelTextCount;
 
     }
-    public void NextLevel()
+    public void OpenLevel()
     {
-        if (LevelParent.childCount <= PlayerPrefs.GetInt("nextLevel"))
-        {
-            PlayerPrefs.SetInt("nextLevel", 0);
-            nextLevelCount = PlayerPrefs.GetInt("nextLevel");
-        }
+        if (LevelParent.childCount <= PlayerPrefs.GetInt("nextLevel", 0))
+            currentLevelCount = PlayerPrefs.GetInt("nextLevel", 0);
         else
-        {
-            nextLevelCount = PlayerPrefs.GetInt("nextLevel");
+            currentLevelCount = PlayerPrefs.GetInt("nextLevel", 0);
 
-        }
-        LevelParent.GetChild(nextLevelCount).gameObject.SetActive(true);
+        LevelParent.GetChild(currentLevelCount).gameObject.SetActive(true);
+    }
+
+    [Button]
+    public void LevelCompleted()
+    {
+
+        UIManager.instance.OpenWinPanel();
+
+        if (LevelParent.childCount - 1 > currentLevelCount)
+            PlayerPrefs.SetInt("nextLevel", currentLevelCount + 1);
+
+        else
+            PlayerPrefs.SetInt("nextLevel", 0);
+    }
+
+    public void GameOver()
+    {
+        UIManager.instance.OpenGameOverPanel();
     }
 
 }

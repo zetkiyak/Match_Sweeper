@@ -13,7 +13,8 @@ public class LevelSettings : MonoBehaviour
     public List<Vector2Int> tilesToOpen = new List<Vector2Int>();
     private void Awake()
     {
-        gridSystem.GenerateGridSystem(_gridSize.x, _gridSize.y);
+        levelManager.OpenLevel();
         levelManager.currentLevelSettings = this;
+        gridSystem.GenerateGridSystem(_gridSize.x, _gridSize.y);
     }
 }

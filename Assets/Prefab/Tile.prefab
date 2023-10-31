@@ -171,6 +171,7 @@ MonoBehaviour:
   item: {fileID: 0}
   id: 
   Mypos: {x: 0, y: 0}
+  MyStartPos: {x: 0, y: 0}
   isActive: 0
 --- !u!114 &-1370778985547807136
 MonoBehaviour:
@@ -184,6 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162f03ac670182b4bb177005bc57761d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resortActive: 0
   endDrag: 0
 --- !u!114 &3675350945013833618
 MonoBehaviour:

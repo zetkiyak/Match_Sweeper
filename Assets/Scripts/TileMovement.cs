@@ -13,7 +13,7 @@ public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDro
     public bool resortActive;
     public bool endDrag;
     MatchControl matchControl;
-
+    public bool clicked;
     private void Awake() => rectTransform = GetComponent<RectTransform>();
     private void Start()
     {
@@ -39,14 +39,22 @@ public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDro
         }
     }
     public void OnDrop(PointerEventData eventData) => matchControl.CheckMatch(endDrag);
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+            clicked = true;
 
+        if (Input.GetMouseButtonUp(0))
+            clicked = false;
+
+    }
     private void FixedUpdate()
     {
         if (GetComponent<Tile>().isActive == true && !resortActive)
             MoveStartPos();
 
 
-        if (Input.touchCount == 0 && !resortActive)
+        if (!clicked && !resortActive)
             endDrag = true;
     }
     private void MoveStartPos()
@@ -75,6 +83,6 @@ public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDro
         }
 
     }
-  
+
 
 }

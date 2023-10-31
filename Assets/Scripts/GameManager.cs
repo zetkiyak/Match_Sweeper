@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public void win()
-    {
-        PlayerPrefs.SetInt("LevelCount", PlayerPrefs.GetInt("LevelCount") + 1);
-        PlayerPrefs.SetInt("nextLevel", PlayerPrefs.GetInt("nextLevel") + 1);
+    public static GameManager instance;
 
-        UIManager.instance.OpenWinPanel();
+    private void Awake()
+    {
+        instance = this;
     }
 
     public void GameOver()
@@ -17,9 +17,12 @@ public class GameManager : MonoBehaviour
 
         PlayerPrefs.SetInt("LevelCount", PlayerPrefs.GetInt("LevelCount"));
         PlayerPrefs.SetInt("nextLevel", PlayerPrefs.GetInt("nextLevel"));
-
         UIManager.instance.OpenGameOverPanel();
 
+    }
 
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

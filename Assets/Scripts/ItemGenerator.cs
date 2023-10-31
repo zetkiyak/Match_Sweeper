@@ -57,14 +57,12 @@ public class ItemGenerator : MonoBehaviour
     public int ChooseRandomStartItem()
     {
         int rand = UnityEngine.Random.Range(1, tilesToOpenCount - 1);//3  1
-        Debug.Log(rand);
         return rand;
     }
-    public string GiveItemsToMatch()//pair match ihtimali controlu  
+    public string GiveItemsToMatch()//pair match ihtimali kontrolu  
     {
         if (allItem.Count > 0)
         {
-            Debug.Log(pairMatchControl);
             if (pairMatchControl != randomTile)//3
                 return GetRandomItem(true);
             else
@@ -78,7 +76,6 @@ public class ItemGenerator : MonoBehaviour
         if (control)
             index = UnityEngine.Random.Range(0, allItem.Count);
 
-        Debug.Log(control);
         itemLenght = allItem[index].count;
         allItem[index].count--;
         pairMatchControl++;
