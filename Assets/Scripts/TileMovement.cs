@@ -1,10 +1,8 @@
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEditor.PlayerSettings;
 using DG.Tweening;
 public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDropHandler
 {

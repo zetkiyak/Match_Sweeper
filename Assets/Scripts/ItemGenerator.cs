@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.Mathematics;
 using UnityEngine;
 public class ItemGenerator : MonoBehaviour
 {

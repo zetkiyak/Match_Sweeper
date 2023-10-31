@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LevelSettings : MonoBehaviour
 {
@@ -16,5 +14,7 @@ public class LevelSettings : MonoBehaviour
         levelManager.OpenLevel();
         levelManager.currentLevelSettings = this;
         gridSystem.GenerateGridSystem(_gridSize.x, _gridSize.y);
+
     }
+
 }
