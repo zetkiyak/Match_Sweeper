@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
@@ -13,13 +15,13 @@ public class MatchControl : MonoBehaviour
     LevelManager levelManager;
     Tile tile;
     GridSystem gridSystem;
-
+    TileMovement tileMovement;
     private void Start()
     {
         levelManager = LevelManager.instance;
         tile = GetComponent<Tile>();
         gridSystem = GridSystem.instance;
-
+        tileMovement = GetComponent<TileMovement>();
     }
     public void FindClosestTile(RectTransform rectTransform)
     {
@@ -56,7 +58,6 @@ public class MatchControl : MonoBehaviour
                 gridSystem.tiles.Remove(closestTile.gameObject.GetComponent<Tile>());
                 gridSystem.tiles.Remove(tile);
 
-                //closestTile.GetComponent<Tile>().Mypos.x = 0;
                 Destroy(closestTile.gameObject);
                 Destroy(this.gameObject);
 
@@ -74,7 +75,49 @@ public class MatchControl : MonoBehaviour
 
 
         gridSystem.ResortOpr();
+        DOVirtual.DelayedCall(2, () =>
+        {
+            AllItemMatch();
+        });
 
+    }
+    public async void AllItemMatch()
+    {
+        if (TileManager.Instance.IsTileOver())
+        {
+            for (int i = 0; i < gridSystem.tiles.Count; i++)
+            {
+
+                string id = gridSystem.tiles[i].id;
+                if (!gridSystem.tiles[i].gameObject.activeInHierarchy)
+                    continue;
+
+
+                for (int j = i + 1; j < gridSystem.tiles.Count; j++)
+                {
+
+                    if (!gridSystem.tiles[j].gameObject.activeInHierarchy)
+                        continue;
+
+                    if (id == gridSystem.tiles[j].id)
+                    {
+                        Tile tile1 = gridSystem.tiles[i];
+                        Tile tile2 = gridSystem.tiles[j];
+
+                        tile1.gameObject.GetComponent<TileMovement>().resortActive = true;
+                        tile1.gameObject.transform.SetAsLastSibling();
+                        await tile1.gameObject.transform.DOMove(tile2.transform.position, 0.3f).AsyncWaitForCompletion();
+
+
+                        tile1.gameObject.GetComponent<TileMovement>().resortActive = false;
+                        tile1.gameObject.SetActive(false);
+                        tile2.gameObject.SetActive(false);
+                        break;
+                    }
+                }
+            }
+
+        }
     }
 
     public List<GameObject> GetNeighbors(Vector2Int position)

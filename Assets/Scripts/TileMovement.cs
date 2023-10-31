@@ -10,7 +10,7 @@ public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDro
 {
     private RectTransform rectTransform;
     private Vector2 startDragPos;
-    bool resortActive;
+    public bool resortActive;
     public bool endDrag;
     MatchControl matchControl;
 
@@ -75,4 +75,6 @@ public class TileMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IDro
         }
 
     }
+  
+
 }

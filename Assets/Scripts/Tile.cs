@@ -20,7 +20,6 @@ public class Tile : MonoBehaviour
         SetItem();
         SetSprite(item);
     }
-
     private void SetItem()
     {
         id = ItemGenerator.Instance.GiveItemsToMatch();

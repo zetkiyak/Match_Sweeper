@@ -78,10 +78,10 @@ public class GridSystem : MonoBehaviour
 
     private void CalculateGridParameters(out Vector3 tileScale, out float startX, out float startY, int _width, int _height)
     {
+        offset = _scale * 100;
+
         float gridWidth = _width * offset;
         float gridHeight = _height * offset;
-
-        offset = _scale * 100;
 
         tileScale = new Vector3(_scale, _scale, 1f);
 
@@ -91,6 +91,7 @@ public class GridSystem : MonoBehaviour
         startX = -gridWidth / 2 + offset / 2;
         startY = gridHeight / 2 - offset / 2;
     }
+
     public GameObject GetTileByPos(int x, int y)
     {
         foreach (Tile tile in tiles)
