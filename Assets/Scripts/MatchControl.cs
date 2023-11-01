@@ -11,13 +11,11 @@ public class MatchControl : MonoBehaviour
     LevelManager levelManager;
     Tile tile;
     GridSystem gridSystem;
-    TileMovement tileMovement;
     private void Start()
     {
         levelManager = LevelManager.instance;
         tile = GetComponent<Tile>();
         gridSystem = GridSystem.instance;
-        tileMovement = GetComponent<TileMovement>();
     }
     public void FindClosestTile(RectTransform rectTransform)
     {
@@ -44,22 +42,17 @@ public class MatchControl : MonoBehaviour
     }
     public void CheckMatch(bool endDrag)
     {
-
         //  CORRECT MATCH
         if (closestTile != null && minDistance < 50 && tile.isActive == true)
         {
             if (closestTile.GetComponent<Tile>().id == tile.id)
             {
-                gridSystem.tiles.Remove(closestTile.gameObject.GetComponent<Tile>());
-                gridSystem.tiles.Remove(tile);
-
-                Destroy(closestTile.gameObject);
-                Destroy(this.gameObject);
+                gridSystem.DestroyGridTiles(closestTile.gameObject.GetComponent<Tile>(), closestTile.gameObject);
+                gridSystem.DestroyGridTiles(tile, this.gameObject);
 
                 var neighbors = GetNeighbors(closestTile.GetComponent<Tile>().Mypos);
                 for (int i = 0; i < neighbors.Count; i++)
                 {
-                    //gridSystem.tiles.Remove(neighbors[i].gameObject.GetComponent<Tile>());
                     neighbors[i].GetComponent<Tile>().ActivateTile();
                 }
             }
@@ -68,6 +61,8 @@ public class MatchControl : MonoBehaviour
         if (minDistance > 50)
             endDrag = true;
 
+
+        //control
 
         gridSystem.ResortOpr();
         DOVirtual.DelayedCall(1.5f, () =>

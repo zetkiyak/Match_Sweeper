@@ -27,12 +27,6 @@ public class LevelManager : MonoBehaviour
 
         OpenLevel();
     }
-    public void LevelTextControl()
-    {
-        int levelTextCount = PlayerPrefs.GetInt("LevelCount") + 1;
-        //LevelCountText.text = "LEVEL " + levelTextCount;
-
-    }
     public void OpenLevel()
     {
         if (LevelParent.childCount <= PlayerPrefs.GetInt("nextLevel", 0))

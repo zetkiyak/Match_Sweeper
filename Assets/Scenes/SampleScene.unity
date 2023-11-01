@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 468944320}
   - component: {fileID: 468944319}
   m_Layer: 0
-  m_Name: "\u0130temSpawner"
+  m_Name: ItemSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

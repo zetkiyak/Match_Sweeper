@@ -20,7 +20,7 @@ public class ItemGenerator : MonoBehaviour
         Instance = this;
     }
     #endregion
-    private IEnumerator Start()//Start Fonksiyonu 2 frame geciktirildi. Bu sayede diðer startlar ile cakismasi onlendi.
+    private IEnumerator Start()
     {
         yield return null;
         yield return null;

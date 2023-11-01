@@ -84,9 +84,6 @@ public class GridSystem : MonoBehaviour
 
         tileScale = new Vector3(_scale, _scale, 1f);
 
-        RectTransform panelRect = this.transform as RectTransform;
-        Vector2 panelSize = panelRect.rect.size;
-
         startX = -gridWidth / 2 + offset / 2;
         startY = gridHeight / 2 - offset / 2;
     }
@@ -103,4 +100,9 @@ public class GridSystem : MonoBehaviour
         return null;
     }
 
+    public void DestroyGridTiles(Tile tile , GameObject destroyedTile )
+    {
+        tiles.Remove(tile);
+        Destroy(destroyedTile);
+    }
 }

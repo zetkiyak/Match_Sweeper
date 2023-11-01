@@ -6,16 +6,20 @@ public class TileManager : MonoBehaviour
 {
     public static TileManager Instance;
     List<TileItem> currentTileIdentities = new List<TileItem>();
-
+    GridSystem gridSystem;
     private void Awake()
     {
         Instance = this;
     }
+    private void Start()
+    {
+        gridSystem = GridSystem.instance;
+    }
     public bool IsTileOver()
     {
-        for (int j = 0; j < GridSystem.instance.tiles.Count; j++)
+        for (int j = 0; j < gridSystem.tiles.Count; j++)
         {
-            Tile tile = GridSystem.instance.tiles[j];
+            Tile tile = gridSystem.tiles[j];
             if (tile.isActive == false)
             {
                 return false;
@@ -29,7 +33,6 @@ public class TileManager : MonoBehaviour
     public void CheckGameOver()
     {
         currentTileIdentities.Clear();
-        GridSystem gridSystem = GridSystem.instance;
         foreach (Tile item in gridSystem.tiles)
         {
             if (item.isActive)
